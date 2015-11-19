@@ -5,6 +5,7 @@
 ##         Individuals: subject_test.txt (values 1:30)
 ##         Measurements: X_test.txt
 ##         Features: features.txt
+##         Activities: activity_labels.txt
 ##
 ## Two sets, test and training data, which should be merged
 ## Using unix wc -l on these files we find the number of records:
@@ -16,9 +17,9 @@
 ##         observations in rows
 ##         variables in columns
 ##
-## Output is grouped by individual and by activity:
+## Output is grouped by subject and by activity:
 ##
-##     Individual  Activity  Avg_X  Avg_Y  Avg_Z  Std_X  Std_Y  Std_Z  ...
+##        Subject  Activity  Avg_X  Avg_Y  Avg_Z  Std_X  Std_Y  Std_Z  ...
 ##              1  WALKING     ...    ...    ...    ...    ...    ...  ...
 ##              1  UPSTAIRS    ...    ...    ...    ...    ...    ...  ...
 ##            ...  ...         ...    ...    ...    ...    ...    ...  ...
@@ -27,9 +28,10 @@
 ##             30  LAYING      ...    ...    ...    ...    ...    ...  ...
 ## There are 30 individuals (subjects) and 6 activities, so a total of 180 lines output
 ##
-## Read the data and extract only the relevant columns (1-6) from the measurements
+## Read the data
 ##
 features <- read.table("features.txt", header=FALSE)
+activityLabels <- read.table("activity_labels.txt, header=FALSE")
 ##
 subjectTest <- read.table("test/subject_test.txt", header=FALSE)
 subjectTrain <- read.table("train/subject_train.txt", header=FALSE)
@@ -48,7 +50,7 @@ colnames(activities) <- c("Activity")
 measurements <- rbind(measurementsTest,measurementsTrain)
 colnames(measurements) <- features$V2
 ##
-## Add the two vectors as the first two columns in the measurements data set,
+## Add the subject and activity vectors as the first two columns in the measurements data set,
 ## but only keep measurements that indicate a mean or a standard deviatian.
 ## Such measurements have column names with "mean" or "std"
 ##
