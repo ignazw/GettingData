@@ -31,7 +31,7 @@
 ## Read the data
 ##
 features <- read.table("features.txt", header=FALSE)
-activityLabels <- read.table("activity_labels.txt, header=FALSE")
+activityLabels <- read.table("activity_labels.txt", header=FALSE)
 ##
 subjectTest <- read.table("test/subject_test.txt", header=FALSE)
 subjectTrain <- read.table("train/subject_train.txt", header=FALSE)
@@ -54,7 +54,7 @@ colnames(measurements) <- features$V2
 ## but only keep measurements that indicate a mean or a standard deviatian.
 ## Such measurements have column names with "mean" or "std"
 ##
-tmpFrame <- subset.data.frame(measurements, select = grep("mean|std",features$V2))
+tmpFrame <- subset.data.frame(measurements, select = grep("mean()|std()",features$V2))
 measurementFrame <- cbind(subjects,activities,tmpFrame)
 ##
 ## We average over the measurements per subject and per activity,
